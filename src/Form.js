@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {Formik, Form, Field} from 'formik';
 import './Form.css';
+import * as Yup from 'yup';
+import FormCheckbox from './FormCheckbox';
+import FormInput from './FormInput';
+import FormRadio from './FormRadio';
 
 export default class FormLab extends Component {
     render() {
@@ -11,48 +15,32 @@ export default class FormLab extends Component {
             children:0,
             checkIn:0,
             checkOut:0,
-
             smoke: "nonsmoking",
             business : false
         }} 
             onSubmit={(formValues) => alert (JSON.stringify(formValues))}
+
+            validationSchema = {Yup.object().shape({
+                name: Yup.string().required('name is required'),
+                persons: Yup.number().min(1).required('select number of persons'),
+                children: Yup.number(),
+                checkIn: Yup.date().required('select the arrival date'),
+                checkOut: Yup.date().required('select the departure date'),
+                business: Yup.boolean()
+            })}
         >
             <Form >
-                <div>
-                    <label>Name</label>
-                    <Field name="name"/>
-                </div>
-                <div>
-                    <label>Persons</label>
-                    <Field type="number" name="persons"/>
-                </div>
-                <div>
-                    <label>Children</label>
-                    <Field type="number" name="children"/>
-                </div>
-                <div>
-                    <label>Check-in date</label>
-                    <Field type="date" name="checkIn"/>
-                </div>
-                <div>
-                    <label>Check-out date</label>
-                    <Field type="date" name="checkOut"/>
-                </div>
-
+                <Field name="name" component={FormInput} label="Name"/>
+                <Field name="persons" component={FormInput} label="Persons" type="number"/>
+                <Field name="children" component={FormInput} label="Children" type="number"/>
+                <Field name="checkIn" component={FormInput} label="Check-in date" type="date"/>
+                <Field name="checkOut" component={FormInput} label="Check-out date" type="date"/>
                 <fieldset>
                     <legend id=''>Smoking\non-smoking room</legend>
-                    <Field type="radio" name="smoke" value="smoking" id="smoking" />
-                    <label for="smoking">Smoking</label>
-
-                    <Field type="radio" name="nonsmoking" value="nonsmoking" id="nonsmoking" />
-                    <label for="nonsmoking">Non-smoking</label>
+                    <Field name="smoke" component={FormRadio} value="smoking" id="smoking" label="Smoking"/>
+                    <Field name="smoke" component={FormRadio} value="nonsmoking" id="nonsmoking" label="Non-smoking"/>
                 </fieldset>
-
-                <div>
-                    <Field type="checkbox" name="business" id="business" />
-                    <label for="business ">I'm traveling for work</label>
-                </div>
-
+                <Field component={FormCheckbox} name="business" label="I'm traveling for work"/>
                 <button type="submit">Search</button>
             </Form>
         </Formik>
