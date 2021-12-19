@@ -29,6 +29,7 @@ export default class FormLab extends Component {
                 business: Yup.boolean()
             })}
         >
+        { ({isValid}) => (
             <Form >
                 <Field name="name" component={FormInput} label="Name"/>
                 <Field name="persons" component={FormInput} label="Persons" type="number"/>
@@ -41,8 +42,8 @@ export default class FormLab extends Component {
                     <Field name="smoke" component={FormRadio} value="nonsmoking" id="nonsmoking" label="Non-smoking"/>
                 </fieldset>
                 <Field component={FormCheckbox} name="business" label="I'm traveling for work"/>
-                <button type="submit">Search</button>
-            </Form>
+                <button type="submit" disabled={!isValid}>Search</button>
+            </Form>)}
         </Formik>
     }
 }
