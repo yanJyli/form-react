@@ -41,7 +41,7 @@ export default class FormLab extends Component {
                     <Field name="smoke" component={FormRadio} value="smoking" id="smoking" label="Smoking"/>
                     <Field name="smoke" component={FormRadio} value="nonsmoking" id="nonsmoking" label="Non-smoking"/>
                 </fieldset>
-                <Field component={FormCheckbox} name="business" label="I'm traveling for work"/>
+                <Field component={FormCheckbox} id="business" name="business" label="I'm traveling for work"/>
                 <button type="submit" disabled={!isValid}>Search</button>
             </Form>)}
         </Formik>
